@@ -1,3 +1,4 @@
+# Multipass bootstrap
 # Nodes
 for i in 1 2 3; do
   multipass launch --name node$i --memory 1.5G --disk 10G
