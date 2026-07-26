@@ -18,12 +18,24 @@ To get all the hosts information:
 
 ```bash
 ansible all -m gather_facts
+# For a single host:
+ansible all -m gather_facts --limit <Host IP/name>
 ```
 
-For a single host:
+To get access to a host package manager:
 
 ```bash
-ansible all -m gather_facts --limit <Host IP/name>
+# I.e. Update cache by elevating the privileges and asking for password
+ansible all -m apt -a update_cache=true --become --ask-become-password
+
+# I.e. Install a package in the same way
+ansible all -m apt -a name=<Package name> --become --ask-become-password
+
+# I.e. Install a package specific version in the same way
+ansible all -m apt -a "name=<Package name> state=<Version>" --become --ask-become-password
+
+# I.e. Upgrade dist in the same way
+ansible all -m apt -a "upgrade=dist" --become --ask-become-password
 ```
 
 ### Ping
