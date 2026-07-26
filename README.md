@@ -49,3 +49,12 @@ Shorter version (by setting defaults via configuration file):
 ```bash
 ansible all -m ping
 ```
+
+## Playbooks
+
+To run a playbook with password:
+
+```bash
+# Privileges are elevated by specific flag inside the playbook
+ansible-playbook --ask-become-pass <Playbook file>
+```
