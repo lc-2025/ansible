@@ -1,0 +1,29 @@
+{
+  "name": "Ansible Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:1": {
+      "configureZshAsDefaultShell": true
+    }
+  },
+  "postCreateCommand": "pip install --upgrade pip && pip install ansible ansible-lint ansible-navigator",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.ansible",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "ansible.ansible.path": "/usr/local/bin/ansible",
+        "ansible.lint.enabled": true,
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "runArgs": ["--net=host"],
+  "mounts": [
+    // SSH Keys
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ]
+}
