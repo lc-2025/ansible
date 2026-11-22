@@ -7,22 +7,17 @@
   # Actions to be performed
   tasks:
 
-    - name: Update repository index
-      ansible.builtin.apt:
-        update_cache: true
-      # Conditional execution
-      when: ansible_distribution == "Ubuntu"
-
-    - name: Install apache2 package
-      ansible.builtin.apt:
-        name: apache2
+    - name: Update repo index & install apache/php package
+      # Universal keyword to automatically identify the distro package manager
+      ansible.builtin.package:
+        name:
+          # Multiple task may be merged into a single one when sharing similar implementation
+          - "{{ apache_package }}"
+          - "{{ php_package }}"
         # Setting version
         state: latest
+        # Deprecated previous repository task in favor of cache updating
+        update_cache: true
       # Conditional execution based on multiple conditions
-      when: ansible_distribution in ["Debian", "Ubuntu"]
-
-    - name: Add php support for apache
-      ansible.builtin.apt:
-        name: libapache2-mod-php
-        state: latest
-      when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "26.04"
+      # when: ansible_distribution in ["Debian", "Ubuntu"]
+      # when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "26.04"
